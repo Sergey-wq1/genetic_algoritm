@@ -70,7 +70,6 @@ let GetBinarryArray__end = function (digits) {
     }
 }
 
-
 let last_digits = [
         [0, 1, 1],
         [1, 0, 1],
@@ -91,6 +90,7 @@ let float_digits = coding_value(int_value, alfa, beta), //массив соде�
 general_code.sort(function (a, b) {
     return a.int - b.int;
 });
+console.log(general_code);
 //после нам необходимо обменяться генами, то есть берем  первый элемент
 //его бинарный код и отдаем другим, чтобы появилось новое потомство
 general_code.splice(5, general_code.length - 1); //вырежем плохих 
@@ -112,7 +112,6 @@ let one = create_child(general_code[0].bin),
     four = create_child(general_code[2].bin),
     five = create_child(general_code[3].bin),
     six = create_child(general_code[4].bin); //получаем первые 2 и последние 3
-
 //в итоге создам три потомка
 let child5 = [...one[0], ...six[1]],
     child6 = [...one[1], ...five[1]],
@@ -136,6 +135,9 @@ let connect1 = transf_coding(child5),
     arr_for_connect = [connect1, connect2, connect3];
 let general_array_end = [];
 for (let i = 0; i < 3; i++) {
-    general_array_end[0] = [...array_for_child[i], ...arr_for_connect[i]]
+    general_array_end[i] = [array_for_child[i], arr_for_connect[i]]
 }
+general_array_end.sort(function (a, b) {
+    return a.int - b.int;
+});
 console.log(general_array_end);
