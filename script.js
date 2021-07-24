@@ -1,3 +1,10 @@
+//canvas
+var example = document.getElementById("example"),
+    ctx = example.getContext('2d'),
+    Axys_x = 0,
+    point = 0,
+    point_next = 0,
+    Axys_y = 150;
 //функция рандома===========================================
 function Random(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -90,7 +97,27 @@ let float_digits = coding_value(int_value, alfa, beta), //массив соде�
 general_code.sort(function (a, b) {
     return a.int - b.int;
 });
-console.log(general_code);
+//=====================================
+let array_for_canvas = [];
+general_code.forEach(function (elem, i) {
+    array_for_canvas[i] = elem.int;
+})
+ctx.strokeStyle = "yellow";
+array_for_canvas[array_for_canvas.length] = 0; //расширим массив
+for (let i = 0; i < 6; i++) {
+    if (array_for_canvas[i] > 100)
+        array_for_canvas[i] = 60;
+    else if (array_for_canvas[i] < -100)
+        array_for_canvas[i] = -60;
+    point = Axys_y - (array_for_canvas[i]);
+    point_next = Axys_y - (array_for_canvas[i + 1]);
+    ctx.beginPath();
+    ctx.moveTo(25 + (i * 25), point);
+    ctx.lineTo(25 + ((i + 1) * 25), point_next);
+    ctx.stroke()
+    ctx.closePath();
+}
+//=====================================
 //после нам необходимо обменяться генами, то есть берем  первый элемент
 //его бинарный код и отдаем другим, чтобы появилось новое потомство
 general_code.splice(5, general_code.length - 1); //вырежем плохих 
@@ -137,7 +164,43 @@ let general_array_end = [];
 for (let i = 0; i < 3; i++) {
     general_array_end[i] = [array_for_child[i], arr_for_connect[i]]
 }
-general_array_end.sort(function (a, b) {
-    return a.int - b.int;
+let general_array_end_float = [general_array_end[0][1], general_array_end[1][1], general_array_end[2][1]];
+//реализуем графики
+general_array_end_float.sort(function (a, b) {
+    return a - b;
 });
-console.log(general_array_end);
+console.log(array_for_canvas);
+array_for_canvas.splice(4, array_for_canvas.length - 1);
+console.log(array_for_canvas);
+let canvas_end = [...array_for_canvas, ...general_array_end_float];
+canvas_end.sort(function (a, b) {
+    return a - b;
+});
+console.log(canvas_end)
+for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+        ctx.strokeStyle = "white";
+        ctx.strokeRect(10 + i * 32, 10 + j * 32, 32, 32);
+    }
+}
+
+point = 0;
+point_next = 0;
+
+//=====================================
+ctx.strokeStyle = "red";
+canvas_end[array_for_canvas.length] = 0; //расширим массив
+for (let i = 0; i < 6; i++) {
+    if (canvas_end[i] > 100)
+        canvas_end[i] = 60;
+    else if (canvas_end[i] < -100)
+        canvas_end[i] = -60;
+    point = Axys_y - (canvas_end[i]);
+    point_next = Axys_y - (canvas_end[i + 1]);
+    ctx.beginPath();
+    ctx.moveTo(170 + (i * 25), point);
+    ctx.lineTo(170 + ((i + 1) * 25), point_next);
+    ctx.stroke()
+    ctx.closePath();
+}
+//=====================================
