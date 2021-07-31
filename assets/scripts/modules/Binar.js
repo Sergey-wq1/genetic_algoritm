@@ -1,5 +1,5 @@
-//класс для двоичных чисес
-class Binar_values {
+import Random from './random.js'
+export class Binar_values {
     constructor(digits) {
         this.digits = digits;
     }
